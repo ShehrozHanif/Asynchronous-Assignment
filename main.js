@@ -65,17 +65,45 @@ Write a function executeSequentially that executes two functions fetchData and
 processData sequentially using Promises, and logs the results in the order they are
 called.
 */
-const executeSequentially = () => {
+// const executeSequentially=()=>{
+//     return new Promise((resolve)=> {
+//         console.log("Fetching Data")
+//         resolve("")
+//     })
+// }
+// const processData = ()=>{
+//     return new Promise((resolve) => {
+//         console.log("Processing Data")
+//         resolve("")
+//     })
+// }
+// executeSequentially().then(processData)
+let fetchData1 = () => {
     return new Promise((resolve) => {
-        console.log("Fetching Data");
-        resolve("");
+        setTimeout(() => {
+            console.log("Fetching Data");
+            resolve("123");
+        }, 2000);
     });
 };
-const processData = () => {
+let processData = () => {
     return new Promise((resolve) => {
-        console.log("Processing Data");
-        resolve("");
+        setTimeout(() => {
+            console.log("Processing Data");
+            resolve("");
+        }, 1000);
     });
 };
-executeSequentially().then(processData);
+let executeSequentially = async () => {
+    try {
+        let fetch = await fetchData1();
+        console.log(fetch);
+        let process = await processData();
+        console.log(process);
+    }
+    catch (error) {
+        console.log(error, "Error is found");
+    }
+};
+executeSequentially();
 export {};

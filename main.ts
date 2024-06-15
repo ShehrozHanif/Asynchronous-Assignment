@@ -76,7 +76,7 @@ const fetchWithError =()=>{
     })
 }
 
-fetchWithError().then((message)=>{console.log(message)}).catch((err)=>{console.log(err)})
+// fetchWithError().then((message)=>{console.log(message)}).catch((err)=>{console.log(err)})
 
 
 
@@ -87,18 +87,43 @@ processData sequentially using Promises, and logs the results in the order they 
 called.
 */
 
-const executeSequentially=()=>{
-    return new Promise((resolve)=> {
-        console.log("Fetching Data")
-        resolve("")
+
+let fetchData1 =()=>{
+    return new Promise((resolve,)=>{
+        setTimeout(()=>{
+            console.log("Fetching Data")
+            resolve("")
+        },2000)
     })
+
 }
 
-const processData = ()=>{
-    return new Promise((resolve) => {
-        console.log("Processing Data")
-        resolve("")
+let processData =()=>{
+    return new Promise((resolve,)=> {
+        setTimeout(() => {
+            console.log("Processing Data")
+            resolve("")
+        },1000);
     })
+} 
+
+let executeSequentially =async ()=>{
+    try{
+        let fetch = await fetchData1()
+        console.log(fetch)
+
+        let process = await processData()
+        console.log(process)
+    }catch(error){
+        console.log(error,"Error is found")
+    }
+    
 }
 
-executeSequentially().then(processData)
+executeSequentially()
+
+
+// So basicall the demand of this question is we need to call the async function in order . As you can see in the first function i used to create
+// artificial timeout to make my fetchData1 function (two seconds) late , than again using SetTimeout to make my processData function (one Second late)
+// and because they are asynchronous so processData() excute first but we use await in our executeSequently functoin so with the halp of await we 
+// can execute these functions() in order make their asynchronous behaviour to synchronous
